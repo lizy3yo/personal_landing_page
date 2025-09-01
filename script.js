@@ -1,3 +1,63 @@
+// Welcome Alert Manager
+class WelcomeAlert {
+    constructor() {
+        this.overlay = document.getElementById('welcomeOverlay');
+        this.closeBtn = document.getElementById('welcomeCloseBtn');
+        // Remove the localStorage check - this makes it show every time
+        this.init();
+    }
+
+    init() {
+        // Always show the welcome alert
+        this.show();
+        this.bindEvents();
+    }
+
+    show() {
+        setTimeout(() => {
+            this.overlay.classList.add('active');
+        }, 500); // Show after a short delay for better UX
+    }
+
+    hide() {
+        this.overlay.classList.remove('active');
+        // Remove the localStorage line so it doesn't remember being closed
+        
+        // Remove from DOM after animation completes
+        setTimeout(() => {
+            this.overlay.style.display = 'none';
+        }, 300);
+    }
+
+    bindEvents() {
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.hide());
+        }
+
+        // Close on overlay click (outside the alert box)
+        if (this.overlay) {
+            this.overlay.addEventListener('click', (e) => {
+                if (e.target === this.overlay) {
+                    this.hide();
+                }
+            });
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.overlay.classList.contains('active')) {
+                this.hide();
+            }
+        });
+    }
+
+    // Method to reset and show welcome again (for testing)
+    reset() {
+        this.overlay.style.display = 'flex';
+        this.show();
+    }
+}
+
 // Theme Management
 class ThemeManager {
     constructor() {
@@ -235,7 +295,10 @@ class PerformanceMonitor {
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all components
+    // Initialize welcome alert first
+    const welcomeAlert = new WelcomeAlert();
+    
+    // Initialize all other components
     const themeManager = new ThemeManager();
     const interactiveComponents = new InteractiveComponents();
     const performanceMonitor = new PerformanceMonitor();
@@ -255,6 +318,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
     
     console.log('🎉 Portfolio initialized successfully!');
+    
+    // Add welcome alert to window for testing purposes
+    window.welcomeAlert = welcomeAlert;
 });
 
 // Handle profile image error (fallback)
