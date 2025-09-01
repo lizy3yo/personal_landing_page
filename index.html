@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/Lucide.css">
+    <title>Kharl De Jesus - Developer Portfolio</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="img/kharl.png" alt="Kharl" id="profileImg">
+                </div>
+                <h1>Kharl De Jesus</h1>
+                <p class="title">Full Stack Developer</p>
+                <p class="tagline">Building the future, one component at a time</p>
+
+                <!-- Social Links -->
+                <div class="social-links">
+                    <a href="https://github.com/lizy3yo" aria-label="GitHub"><i data-lucide="github"></i></a>
+                    <a href="https://www.linkedin.com/in/kharl-ryan-de-jesus-839a9b25b/" aria-label="LinkedIn"><i
+                            data-lucide="linkedin"></i></a>
+                    <a href="https://portfolio-minimalist-6ifi.vercel.app/" aria-label="Portfolio"><i
+                            data-lucide="user"></i></a>
+                    <a href="mailto:dejesuskharl32@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle">Change Theme</button>
+            </div>
+
+            <!-- Content area with both grid and interactive component -->
+            <div class="content-area">
+                <div class="content-grid">
+                    <div class="about-card">
+                        <h2>About Me</h2>
+                        <p>I'm a passionate Full Stack developer with expertise in modern web development. I specialize in
+                            creating scalable, performant applications using React, TypeScript, and modern CSS. With a
+                            strong focus on user experience and clean code, I enjoy solving complex problems and building
+                            intuitive interfaces.</p>
+                    </div>
+
+                    <div class="expertise-card">
+                        <h2>Expertise</h2>
+                        <div class="skills-grid">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">Next.js</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">CSS</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Webpack</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive component positioned below the grid -->
+                <div class="interactive-card fade-in">
+                    <h2>Interactive Component</h2>
+                    <button class="magic-button" id="magicButton">✨ Click Me!</button>
+                    <div class="magic-text" id="magicText">Press the button to see React magic!</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Gordon College • © 2024 Kharl De Jesus</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+
+</html>
