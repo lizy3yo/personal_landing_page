@@ -68,7 +68,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  height: 400px;
+  /* Remove the fixed height - let content determine height */
+  /* height: 400px; */
 }
 
 .profile-card {
@@ -192,7 +193,9 @@ body {
   padding: 2rem;
   box-shadow: var(--shadow);
   transition: transform 0.3s ease;
-  height: 400px;
+  /* Remove fixed height and let content determine height */
+  /* height: 400px; */
+  min-height: 300px; /* Add minimum height instead */
 }
 
 .about-card:hover, .expertise-card:hover {
@@ -442,6 +445,14 @@ footer {
   .content-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    /* Ensure no fixed height on mobile */
+    height: auto;
+  }
+  
+  .about-card, .expertise-card {
+    /* Remove any fixed height on mobile and let content flow naturally */
+    min-height: auto;
+    height: auto;
   }
   
   .profile-card {
