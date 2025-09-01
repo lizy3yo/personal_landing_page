@@ -445,12 +445,10 @@ footer {
   .content-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    /* Ensure no fixed height on mobile */
     height: auto;
   }
   
   .about-card, .expertise-card {
-    /* Remove any fixed height on mobile and let content flow naturally */
     min-height: auto;
     height: auto;
   }
