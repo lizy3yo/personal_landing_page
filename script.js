@@ -3,7 +3,6 @@ class WelcomeAlert {
     constructor() {
         this.overlay = document.getElementById('welcomeOverlay');
         this.closeBtn = document.getElementById('welcomeCloseBtn');
-        // Remove the localStorage check - this makes it show every time
         this.init();
     }
 
@@ -16,14 +15,12 @@ class WelcomeAlert {
     show() {
         setTimeout(() => {
             this.overlay.classList.add('active');
-        }, 500); // Show after a short delay for better UX
+        }, 500); 
     }
 
     hide() {
         this.overlay.classList.remove('active');
-        // Remove the localStorage line so it doesn't remember being closed
-        
-        // Remove from DOM after animation completes
+     
         setTimeout(() => {
             this.overlay.style.display = 'none';
         }, 300);
@@ -102,13 +99,13 @@ class ThemeManager {
 class InteractiveComponents {
     constructor() {
         this.magicMessages = [
-            "✨ React magic is happening!",
+            "✨ Magic is happening!",
             "🚀 Components are rendering!",
             "⚡ State is updating!",
-            "🎯 Props are flowing!",
-            "🔥 Hooks are working!",
-            "💫 Virtual DOM is diffing!",
-            "🌟 JSX is transpiling!",
+            "🎯 Ideas are flowing!",
+            "🔥 Codes are working!",
+            "💫 Creativity is blooming!",
+            "🌟 Brain is functioning",
             "⭐ Effects are running!"
         ];
         this.currentMessageIndex = 0;
