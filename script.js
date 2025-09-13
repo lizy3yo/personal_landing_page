@@ -3,13 +3,28 @@ class WelcomeAlert {
     constructor() {
         this.overlay = document.getElementById('welcomeOverlay');
         this.closeBtn = document.getElementById('welcomeCloseBtn');
+        this.greetingEl = document.getElementById('welcomeGreeting');
+        this.titleEl = document.getElementById('welcomeTitle');
+        this.messageEl = document.getElementById('welcomeMessage');
         this.init();
     }
 
     init() {
-        // Always show the welcome alert
+        this.setWelcomeMessage();
         this.show();
         this.bindEvents();
+    }
+
+    setWelcomeMessage() {
+        if (!this.messageEl || !this.titleEl || !this.greetingEl) return;
+        const hour = new Date().getHours();
+        let greet = 'Hello';
+        if (hour >= 5 && hour < 12) greet = 'Good morning';
+        else if (hour >= 12 && hour < 18) greet = 'Good afternoon';
+        else greet = 'Good evening';
+        this.greetingEl.textContent = greet;
+        this.titleEl.textContent = 'Welcome to My Portfolio!';
+        this.messageEl.textContent = `I'm Kharl De Jesus, a passionate Full Stack Developer. Thank you for visiting my portfolio. Feel free to explore and get to know more about my work!`;
     }
 
     show() {
