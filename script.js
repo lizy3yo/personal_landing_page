@@ -56,44 +56,7 @@ class WelcomeAlert {
 }
 
 // Theme Management
-class ThemeManager {
-    constructor() {
-        this.currentTheme = localStorage.getItem('theme') || 'light';
-        this.init();
-    }
-
-    init() {
-        this.applyTheme();
-        this.bindEvents();
-    }
-
-    applyTheme() {
-        if (this.currentTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-        } else {
-            document.body.classList.remove('dark-theme');
-        }
-    }
-
-    toggleTheme() {
-        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-        localStorage.setItem('theme', this.currentTheme);
-        this.applyTheme();
-        
-        // Add transition effect
-        document.body.style.transition = 'all 0.3s ease';
-        setTimeout(() => {
-            document.body.style.transition = '';
-        }, 300);
-    }
-
-    bindEvents() {
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => this.toggleTheme());
-        }
-    }
-}
+// (Old ThemeManager removed — replaced by improved ThemeManager later in file.)
 
 // Interactive Components
 class InteractiveComponents {
@@ -296,7 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomeAlert = new WelcomeAlert();
     
     // Initialize all other components
-    const themeManager = new ThemeManager();
     const interactiveComponents = new InteractiveComponents();
     const performanceMonitor = new PerformanceMonitor();
     
@@ -318,6 +280,165 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Add welcome alert to window for testing purposes
     window.welcomeAlert = welcomeAlert;
+});
+
+// Dynamic Greeting based on local time
+function setGreeting() {
+    const greetingEl = document.getElementById('greeting');
+    if (!greetingEl) return;
+    const hour = new Date().getHours();
+    let greet = 'Hello';
+    if (hour >= 5 && hour < 12) greet = 'Good Morning';
+    else if (hour >= 12 && hour < 18) greet = 'Good Afternoon';
+    else greet = 'Good Evening';
+    greetingEl.textContent = `${greet}!`;
+}
+
+setGreeting();
+
+// Responsive nav toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', String(!expanded));
+            navLinks.classList.toggle('show');
+        });
+
+        // Close menu when clicking a nav link (mobile)
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                navLinks.classList.remove('show');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+});
+
+// Theme toggle label and persistence improvements
+class ThemeManager {
+    constructor() {
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.toggleBtn = document.getElementById('themeToggle');
+        this.init();
+    }
+
+    init() {
+        this.applyTheme();
+        this.updateButtonText();
+        this.bindEvents();
+    }
+
+    applyTheme() {
+        // Ensure both explicit classes are set for clearer CSS targeting
+        if (this.currentTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.body.classList.remove('light-theme');
+        } else {
+            document.body.classList.add('light-theme');
+            document.body.classList.remove('dark-theme');
+        }
+        this.updateToggleClass();
+    }
+
+    toggleTheme() {
+        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', this.currentTheme);
+        this.applyTheme();
+        this.updateButtonText();
+        document.body.style.transition = 'all 0.3s ease';
+        setTimeout(() => { document.body.style.transition = ''; }, 300);
+    }
+
+    updateButtonText() {
+        if (!this.toggleBtn) return;
+        // Show an icon + label. Use lucide icons if available; otherwise insert the data-lucide attribute
+        const iconName = this.currentTheme === 'dark' ? 'sun' : 'moon';
+        const label = this.currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        this.toggleBtn.innerHTML = `<i data-lucide="${iconName}"></i><span class="toggle-label">${label}</span>`;
+
+        // If lucide is already loaded, render the icons here. If not, the script tag at the end
+        // of the page will call lucide.createIcons() once it's available.
+        if (window.lucide && typeof lucide.createIcons === 'function') {
+            try { lucide.createIcons(); } catch (e) { /* ignore */ }
+        }
+    }
+
+    bindEvents() {
+        if (this.toggleBtn) {
+            this.toggleBtn.addEventListener('click', () => this.toggleTheme());
+        }
+    }
+
+    updateToggleClass() {
+        if (!this.toggleBtn) return;
+        this.toggleBtn.classList.remove('light', 'dark');
+        this.toggleBtn.classList.add(this.currentTheme === 'dark' ? 'dark' : 'light');
+    }
+}
+
+// Replace earlier ThemeManager usage with the new one
+document.addEventListener('DOMContentLoaded', () => {
+    // If ThemeManager defined earlier via module export, avoid duplicate
+    try {
+        window._themeManager = new ThemeManager();
+    } catch (e) {
+        console.error('Theme manager init failed', e);
+    }
+});
+
+// Contact form validation
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const messageError = document.getElementById('messageError');
+    const formSuccess = document.getElementById('formSuccess');
+
+    function validateEmail(email) {
+        return /^\S+@\S+\.\S+$/.test(email);
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let valid = true;
+        nameError.textContent = '';
+        emailError.textContent = '';
+        messageError.textContent = '';
+        formSuccess.textContent = '';
+
+        if (!nameInput.value.trim()) {
+            nameError.textContent = 'Please enter your name.';
+            valid = false;
+        }
+
+        if (!emailInput.value.trim() || !validateEmail(emailInput.value.trim())) {
+            emailError.textContent = 'Please enter a valid email.';
+            valid = false;
+        }
+
+        if (!messageInput.value.trim()) {
+            messageError.textContent = 'Message cannot be empty.';
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        // Simulate successful send
+        formSuccess.textContent = 'Message sent! Thank you.';
+        form.reset();
+
+        // Clear success after a few seconds
+        setTimeout(() => { formSuccess.textContent = ''; }, 5000);
+    });
 });
 
 // Handle profile image error (fallback)

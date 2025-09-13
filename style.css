@@ -1,27 +1,30 @@
 /* CSS Variables for Theme Management */
 :root {
-  --primary-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-bg: rgba(255, 255, 255, 0.1);
-  --card-bg: rgba(255, 255, 255, 0.15);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --accent-color: #4ecdc4;
-  --border-color: rgba(255, 255, 255, 0.2);
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --skill-bg: rgba(255, 255, 255, 0.2);
+  /* Light palette (explicit white/light theme by default) */
+  --primary-bg: linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+  --secondary-bg: rgba(15, 23, 36, 0.04);
+  --card-bg: #ffffff;
+  --text-primary: #0f1724; /* dark text for readability */
+  --text-secondary: rgba(15, 23, 36, 0.65);
+  --accent-color: #2563eb; /* blue accent that pairs with white */
+  --border-color: rgba(15, 23, 36, 0.06);
+  --shadow: 0 8px 32px rgba(15, 23, 36, 0.06);
+  --skill-bg: rgba(37, 99, 235, 0.06);
+  /* Welcome alert heading gradient end color for light theme - keep visible on white */
+  --welcome-heading-end: #2563eb; /* pale blue for contrast on white */
 }
 
 /* Dark Theme Variables */
 .dark-theme {
-  --primary-bg: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  --secondary-bg: rgba(0, 0, 0, 0.3);
-  --card-bg: rgba(0, 0, 0, 0.4);
-  --text-primary: #ecf0f1;
-  --text-secondary: #bdc3c7;
-  --accent-color: #3498db;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --skill-bg: rgba(52, 152, 219, 0.2);
+  --primary-bg: linear-gradient(180deg, #0b1220 0%, #0f1724 100%);
+  --secondary-bg: rgba(255, 255, 255, 0.03);
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --text-primary: #eef2ff;
+  --text-secondary: rgba(238, 242, 255, 0.7);
+  --accent-color: #60a5fa;
+  --border-color: rgba(255, 255, 255, 0.06);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --skill-bg: rgba(96, 165, 250, 0.06);
 }
 
 /* Reset and Base Styles */
@@ -44,6 +47,85 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  position: sticky;
+  top: 10px; /* Sticks to the top of the viewport */
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  z-index: 3;
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+}
+
+.nav-links a:hover {
+  background: var(--secondary-bg);
+}
+
+.nav-toggle {
+  display: none;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.nav-toggle:hover {
+  background: var(--secondary-bg);
+  transform: translateY(-1px);
+}
+
+/* Desktop navbar styling */
+@media (min-width: 769px) {
+  .navbar {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 1.7rem;
+    box-shadow: var(--shadow);
+  }
+  
+  .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Greeting */
+.greeting {
+  font-size: 1rem;
+  color: var(--accent-color);
+  margin-bottom: 0.8rem;
+  font-weight: 600;
 }
 
 /* Hero Section */
@@ -110,7 +192,7 @@ body {
 .profile-card h1 {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(45deg, var(--accent-color), #ffffff);
+  background: linear-gradient(45deg, var(--accent-color), var(--welcome-heading-end));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -158,25 +240,60 @@ body {
 }
 
 /* Theme Toggle Button */
+
 .theme-toggle {
   background: var(--accent-color);
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
+  padding: 0.55rem 0.95rem;
+  border-radius: 18px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  transition: all 0.18s ease;
+  text-transform: none;
+  letter-spacing: 0.4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .theme-toggle:hover {
-  background: var(--text-primary);
-  color: var(--accent-color);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Theme toggle variants */
+.theme-toggle.light {
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.theme-toggle.dark {
+  background: var(--accent-color);
+  color: #ffffff;
+}
+
+/* Icon + label layout for theme toggle */
+.theme-toggle svg,
+.theme-toggle .lucide,
+.theme-toggle i[data-lucide],
+.theme-toggle i {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.theme-toggle svg {
+  vertical-align: middle;
+  stroke: currentColor; /* ensure icon matches text color */
+  fill: none;
+  display: inline-block;
+}
+
+.theme-toggle .toggle-label {
+  line-height: 1;
 }
 
 /* About Section */
@@ -253,7 +370,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 20px;
   box-shadow: var(--shadow);
-  padding: 2rem;
+  padding: 3.9rem;
   text-align: center;
   transition: transform 0.3s ease;
 }
@@ -318,6 +435,39 @@ body {
 
 .interactive-card.fade-in {
   animation-delay: 0.8s; /* Appears last */
+}
+
+/* Contact form */
+.contact-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.contact-card label {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.contact-card input,
+.contact-card textarea {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-primary);
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  min-height: 1.1rem;
+}
+
+.success {
+  color: #7bed9f;
+  margin-top: 0.6rem;
+  font-weight: 600;
 }
 
 /* Footer */
@@ -516,5 +666,61 @@ footer {
   }
   60% {
     transform: translateY(-10px);
+  }
+}
+
+/* Responsive navbar behavior */
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 100%; /* Position below the navbar */
+    left: 0;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    z-index: 1000; /* Ensure it appears above other content */
+    min-width: 150px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .nav-links.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-toggle {
+    display: block;
+    z-index: 1001; /* Ensure toggle button is above the menu */
+  }
+
+  .nav-links a {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    background: var(--secondary-bg);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-image {
+    width: 180px;
+    height: 180px;
+  }
+
+  .container {
+    padding: 1rem;
   }
 }
